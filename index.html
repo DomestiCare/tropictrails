@@ -1,96 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Andamanic Travelopedia</title>
-  <style>
-    body { margin:0; font-family:Arial,sans-serif; color:#333; }
-    header { background:url('https://via.placeholder.com/1600x600')center/cover;height:60vh;display:flex;align-items:center;justify-content:center;}
-    header h1 { color:#fff; font-size:3rem; text-shadow:2px 2px 4px rgba(0,0,0,0.7); }
-    nav { display:flex; justify-content:center; background:#004d4d; padding:10px; }
-    nav a{ color:#fff;margin:0 15px;text-decoration:none;font-weight:bold; }
-    section { padding:40px 20px; }
-    .packages, .reviews { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-    .card { border:1px solid #ddd; border-radius:8px; width:300px; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-    .card img { width:100%; height:200px; object-fit:cover; }
-    .card-content { padding:15px; }
-    .btn { display:inline-block;margin:10px 0;padding:12px 20px;background:#009999;color:#fff;border:none;border-radius:5px;text-decoration:none;font-weight:bold; }
-    footer { background:#004d4d;color:#fff;text-align:center;padding:20px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AndamanicTravelopedia - Andaman Begins Here</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-blue: #0077be;
+            --ocean-teal: #20b2aa;
+            --sunset-orange: #ff6b35;
+            --coral-pink: #ff8a80;
+            --sand-beige: #f5deb3;
+            --deep-blue: #003f5c;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            overflow-x: hidden;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode nav {
+            background: rgba(26, 26, 26, 0.95);
+        }
+        
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        body.dark-mode .nav-links a {
+            color: #e0e0e0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-blue);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 119, 190, 0.3), rgba(255, 107, 53, 0.3));
+            z-index: -1;
+        }
+        
+        .hero-content {
+            z-index: 1;
+            color: white;
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        
+        .hero h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--sunset-orange), var(--coral-pink));
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        /* Packages Section */
+        .packages {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--light-gray), rgba(32, 178, 170, 0.1));
+        }
+        
+        body.dark-mode .packages {
+            background: linear-gradient(135deg, #2a2a2a, rgba(32, 178, 170, 0.2));
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-family: 'Caveat', cursive;
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .section-title.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .package-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        body.dark-mode .package-card {
+            background: #333;
+        }
+        
+        .package-card.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .package-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--ocean-teal), var(--primary-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .package-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .package-card:hover .package-image::before {
+            left: 100%;
+        }
+        
+        .package-content {
+            padding: 2rem;
+        }
+        
+        .package-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+        }
+        
+        body.dark-mode .package-title {
+            color: #e0e0e0;
+        }
+        
+        .package-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .package-duration {
+            color: var(--ocean-teal);
+            font-weight: 500;
+        }
+        
+        .package-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--sunset-orange);
+        }
+        
+        .package-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--ocean-teal));
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .package-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 190, 0.3);
+        }
+        
+        /* Reviews Section */
+        .reviews {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        body.dark-mode .reviews {
+            background: #1a1a1a;
+        }
+        
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .review-card {
+            background: linear-gradient(135deg, rgba(32, 178, 170, 0.1), rgba(0, 119, 190, 0.1));
+            padding: 2rem;
+            border-radius: 20px;
+            border-left: 4px solid var(--ocean-teal);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        body.dark-mode .review-card {
+            background: linear-gradient(135deg, rgba(32, 178, 170, 0.2), rgba(0, 119, 190, 0.2));
+        }
+        
+        .review-card.in-view {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .review-stars {
+            color: var(--sunset-orange);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .review-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .review-author {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--light-gray), rgba(255, 107, 53, 0.1));
+        }
+        
+        body.dark-mode .gallery {
+            background: linear-gradient(135deg, #2a2a2a, rgba(255, 107, 53, 0.2));
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .gallery-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--primary-blue), var(--ocean-teal));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        /* Video Section */
+        .video-section {
+            padding: 5rem 0;
+            background: var(--deep-blue);
+            color: white;
+            text-align: center;
+        }
+        
+        .video-container {
+            max-width: 800px;
+            margin: 3rem auto 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, var(--ocean-teal), var(--primary-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .video-placeholder:hover {
+            transform: scale(1.02);
+        }
+        
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-placeholder:hover::before {
+            opacity: 1;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, rgba(0, 119, 190, 0.1), rgba(32, 178, 170, 0.1));
+        }
+        
+        body.dark-mode .contact {
+            background: linear-gradient(135deg, rgba(0, 119, 190, 0.2), rgba(32, 178, 170, 0.2));
+        }
+        
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--ocean-teal));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 119, 190, 0.3);
+        }
+        
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 119, 190, 0.4);
+        }
+        
+        .contact-button.whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+        }
+        
+        .contact-button.whatsapp:hover {
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--deep-blue);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--coral-pink);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--coral-pink);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: var(--coral-pink);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Floating Elements */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .floating-whatsapp {
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        
+        .close:hover {
+            opacity: 0.7;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">AndamanicTravelopedia</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#packages" class="nav-link">Packages</a></li>
+                <li><a href="#reviews" class="nav-link">Reviews</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#contact" class="nav-link">Book Now</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
 
-<header id="home">
-  <h1>Andamanic Travelopedia</h1>
-</header>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <video class="hero-video" autoplay muted loop>
+            <source src="placeholder-hero-video.mp4" type="video/mp4">
+            <!-- Placeholder for drone video -->
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Andaman Begins Here</h1>
+            <p>Cruise. Dive. Discover.</p>
+            <a href="#packages" class="cta-button">Explore Packages</a>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
 
-<nav>
-  <a href="#packages">Packages</a>
-  <a href="#reviews">Reviews</a>
-  <a href="#contact">Contact</a>
-</nav>
+    <!-- Packages Section -->
+    <section id="packages" class="packages">
+        <div class="container">
+            <h2 class="section-title">Island Paradise Packages</h2>
+            <div class="packages-grid">
+                <div class="package-card">
+                    <div class="package-image">
+                        <i class="fas fa-ship"></i>
+                    </div>
+                    <div class="package-content">
+                        <h3 class="package-title">Coral Cruise Adventure</h3>
+                        <div class="package-details">
+                            <span class="package-duration">5 Days / 4 Nights</span>
+                            <span class="package-price">₹35,000</span>
+                        </div>
+                        <button class="package-button">Book Now</button>
+                    </div>
+                </div>
+                
+                <div class="package-card">
+                    <div class="package-image">
+                        <i class="fas fa-swimmer"></i>
+                    </div>
+                    <div class="package-content">
+                        <h3 class="package-title">Scuba Diving Expedition</h3>
+                        <div class="package-details">
+                            <span class="package-duration">3 Days / 2 Nights</span>
+                            <span class="package-price">₹25,000</span>
+                        </div>
+                        <button class="package-button">Book Now</button>
+                    </div>
+                </div>
+                
+                <div class="package-card">
+                    <div class="package-image">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <div class="package-content">
+                        <h3 class="package-title">Beach Bliss Getaway</h3>
+                        <div class="package-details">
+                            <span class="package-duration">7 Days / 6 Nights</span>
+                            <span class="package-price">₹45,000</span>
+                        </div>
+                        <button class="package-button">Book Now</button>
+                    </div>
+                </div>
+                
+                <div class="package-card">
+                    <div class="package-image">
+                        <i class="fas fa-helicopter"></i>
+                    </div>
+                    <div class="package-content">
+                        <h3 class="package-title">Island Hopping Premium</h3>
+                        <div class="package-details">
+                            <span class="package-duration">10 Days / 9 Nights</span>
+                            <span class="package-price">₹75,000</span>
+                        </div>
+                        <button class="package-button">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="video">
-  <h2 style="text-align:center;">Explore Andaman & Nicobar</h2>
-  <div style="max-width:800px;margin:20px auto;">
-    <!-- YouTube Embed -->
-    <iframe width="100%" height="450" src="https://www.youtube.com/embed/oeFXUgGML1E" frameborder="0" allowfullscreen></iframe>
-  </div>
-</section>
-
-<section id="packages">
-  <h2 style="text-align:center;">Sample Packages</h2>
-  <div class="packages">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200?text=4N+5D+Andaman" alt="Package 1">
-      <div class="card-content">
-        <h3>4 Nights · 5 Days</h3>
-        <p>Port Blair → Havelock (Radhanagar & Elephant Beach) → Neil Island</p>
-        <p><strong>From ₹13,582 per person</strong></p>
-        <a class="btn" href="https://wa.me/919476092854">Book Now</a>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200?text=7N+8D+Andaman+Explorer" alt="Package 2">
-      <div class="card-content">
-        <h3>7 Nights · 8 Days</h3>
-        <p>Port Blair → Havelock → Baratang Caves → Ross & Neil Island</p>
-        <p><strong>From ₹19,999 per person</strong></p>
-        <a class="btn" href="https://wa.me/919476092854">Book Now</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="reviews">
-  <h2 style="text-align:center;">Customer Reviews</h2>
-  <div class="reviews">
-    <div class="card">
-      <div class="card-content">
-        <p>“Absolutely loved the Radhanagar sunrise tour! Excellent service, top-class arrangements.”<br><strong>– Priya, Chennai</strong></p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-content">
-        <p>“Great value and super friendly guides. Highly recommended!”<br><strong>– Raj, Kolkata</strong></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <h2 style="text-align:center;">Get in Touch</h2>
-  <p style="text-align:center;">
-    📞 +91‑94760 92854 · <a href="mailto:info@andamanictravelopedia.com">info@andamanictravelopedia.com</a><br>
-    <a class="btn" href="https://wa.me/919476092854">Chat on WhatsApp</a>
-  </p>
-</section>
-
-<footer>
-  © 2025 Andamanic Travelopedia. All Rights Reserved.
-  <p>Follow us: Instagram | Facebook | YouTube</p>
-</footer>
-
-</body>
-</html>
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2 class="section-title">What Our Travelers Say</h2>
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Absolutely magical experience! The coral reefs were breathtaking and the service was exceptional. AndamanicTravelopedia made our dream vacation a reality."</p>
+                    <p class="review-author">- Priya Sharma, Mumbai</p>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"The scuba diving experience was incredible! Professional guides, crystal clear waters,
